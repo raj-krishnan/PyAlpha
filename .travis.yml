@@ -1,8 +1,15 @@
 language: python
 
 python:
-  - "3.5"
+  - 3.5
 
-install: "pip install -r requirements.txt"
+install:
+  - pip install -r requirements.txt
+  - pip install coverage
+  - pip install python-coveralls
 
-script: nosetests
+script:
+  - nosetests --with-coverage -v
+
+after_success:
+  - coveralls
