@@ -19,5 +19,32 @@ class PortfolioTest(unittest.TestCase):
         self.assertTrue(tesla_historical.high >= tesla_historical.low)
         self.assertTrue(tesla_historical.low > 0)
 
+    def test_get_stock_quote(self):
+        pass
+
+    def test_buy_stock_sufficient_balance(self):
+        pass
+
+    def test_buy_stock_insufficient_balance(self):
+        pass
+
+    def test_sell_stock_sufficient_stocks_available(self):
+        pass
+
+    def test_sell_stock_insufficient_stocks_available(self):
+        pass
+
+    def test_funds_deposit(self):
+        pass
+
+    def test_transaction_history(self):
+        pass
+
+    def test_portfolio_contents(self):
+        pass
+
+    def test_check_logs(self):
+        pass
+
     def tearDown(self):
         pass
