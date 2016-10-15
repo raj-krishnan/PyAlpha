@@ -1,4 +1,5 @@
-from pyalpha.portfolio.models import setup_portfolio_database
+from pyalpha.portfolio import models
+from pyalpha.data_structures.Stock import Stock
 
 
 class Portfolio:
@@ -6,18 +7,22 @@ class Portfolio:
     def __init__(self, name="", initial_balance=20000):
         self.name = name
         self.balance = initial_balance
-        setup_portfolio_database()
+        models.setup_portfolio_database()
 
     def get_stock_quote(self, symbol):
         """
         Get the current price of a stock
         """
-        pass
+        stock = Stock(symbol)
+        stock.fetch_price()
+        return stock.price
 
     def buy_stock(self, symbol, quantity):
         """
         Buy a stock
         """
+        models.db. = TableStock()
+        self.balance = self.balance - get_stock_quote(symbol)*quantity
         pass
 
     def sell_stock(self, symbol, quantity):
