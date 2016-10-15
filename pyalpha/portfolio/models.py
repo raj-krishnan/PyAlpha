@@ -3,29 +3,37 @@ import peewee
 db = peewee.SqliteDatabase("portfolio.db")
 
 
-class TableStock(peewee.Model):
-    """
-    Database Table containing list of stocks held
-    """
-    stock = peewee.CharField()
-
+class BaseModel(peewee.Model):
     class Meta:
-        database = db
+        database = db  # this model uses the "portfolio.db" database
 
 
-class TablePortfolio(peewee.Model):
+class TablePerson(BaseModel):
+    """
+    Database Table containing names of people
+    """
+    name = peewee.CharField(null=False)
+
+
+class TablePortfolio(BaseModel):
     """
     Database Table containing:
         - Stocks held
         - Their Purchase price
         - Quantity Held
     """
-    stock = peewee.ForeignKeyField(TableStock)
+    person = peewee.ForeignKeyField(TablePerson, related_name='portfolio')
+    stock = peewee.CharField()
     purchase_price = peewee.IntegerField()
     quantity = peewee.IntegerField()
 
-    class Meta:
-        database = db
+
+# def before_request_handler():
+#     database.connect()
+
+
+# def after_request_handler():
+#     database.close()
 
 
 def setup_portfolio_database():
@@ -33,9 +41,9 @@ def setup_portfolio_database():
     Create database tables if required
     """
     try:
-        TableStock.create_table()
+        TablePerson.create_table()
     except peewee.OperationalError:
-        print("Stock table already exists!")
+        print("People table already exists!")
 
     try:
         TablePortfolio.create_table()

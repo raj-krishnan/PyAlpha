@@ -7,7 +7,10 @@ class Portfolio:
     def __init__(self, name="", initial_balance=20000):
         self.name = name
         self.balance = initial_balance
+        # is this line correct (that is we are calling this function every time
+        # that we add a new person)
         models.setup_portfolio_database()
+        models.TablePerson.insert(name=self.name).execute()
 
     def get_stock_quote(self, symbol):
         """
@@ -21,15 +24,25 @@ class Portfolio:
         """
         Buy a stock
         """
-        models.db. = TableStock()
-        self.balance = self.balance - get_stock_quote(symbol)*quantity
-        pass
+        stock_price = self.get_stock_quote(symbol)
+        new_stock = models.TablePortfolio(
+            name=self.name, stock=symbol,
+            purchase_price=stock_price, quantity=quantity)
+        new_stock.save()
+        self.balance = self.balance - stock_price * quantity
 
     def sell_stock(self, symbol, quantity):
         """
         Sell a stock
         """
-        pass
+        stock_price = self.get_stock_quote(symbol)
+        models.TablePortfolio.select().where(
+            models.TablePortfolio.person == self.name).exists()
+        new_stock = models.TablePortfolio(
+            person=self.name, stock=symbol,
+            purchase_price=stock_price, quantity=quantity)
+        new_stock.save()
+        self.balance = self.balance - stock_price * quantity
 
     def view_portfolio(self):
         """
