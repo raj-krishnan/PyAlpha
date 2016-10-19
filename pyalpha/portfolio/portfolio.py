@@ -152,13 +152,15 @@ class Person():
                             .select()
                             .where(models.TablePortfolio.person == person_record))
         records = pandas.DataFrame()
+        i = 1
         for record in portfolio_record:
             record_df = pandas.DataFrame({'Stock': record.stock,
-                                            'Average Price': record.average_price,
-                                            'Quantity': record.quantity,
-                                            },
-                                           index=[pandas.Timestamp('now')])
+                                          'Average Price': record.average_price,
+                                          'Quantity': record.quantity,
+                                          },
+                                         index=[i])
             records = records.append(record_df)
+            i = i + 1
         return records
         # print('The portfolio details of %s:' % (self.name))
         # print(['Stock', 'Average Price', 'Quantity'])
