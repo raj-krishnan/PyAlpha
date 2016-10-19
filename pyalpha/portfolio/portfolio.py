@@ -1,3 +1,5 @@
+import pandas
+
 from pyalpha.portfolio import models
 from pyalpha.data_structures.Stock import Stock
 
@@ -10,6 +12,12 @@ class Person():
     def __init__(self, person_name, initial_balance):
         self.name = person_name
         self.balance = initial_balance
+
+    def add_funds(self, deposit):
+        """
+        Increase balance in the account
+        """
+        self.balance = self.balance + deposit
 
     def get_stock_quote(self, symbol):
         """
@@ -90,6 +98,12 @@ class Person():
         person_record.balance = self.balance
         person_record.save()
 
+    def get_transaction_history(self, user=""):
+        """
+        Get list of transactions made from log file
+        """
+        return self.log.loc[self.log['Name'] == user]
+
 
 class Portfolio:
 
@@ -98,6 +112,7 @@ class Portfolio:
         # Contains 'name of the person' as the key, with the 'People object' as
         # the value
         self.people = {}
+        self.log = pandas.DataFrame()
 
     def add_person(self, person_name="", initial_balance=0):
         """
@@ -119,18 +134,30 @@ class Portfolio:
         """
         Get list of transactions made from log file
         """
-        pass
+        return self.log
 
-    def add_funds(self, deposit):
-        """
-        Increase balance in the account
-        """
-        self.balance += deposit
-
-    def logger(self, action, symbol, cost, quantity, balance):
+    def logger(self, user, action, symbol, cost=0, quantity=0, amount=0, new_balance):
         """
         Logs all actions performed: BUY, SELL, ADD_FUNDS
         Format:
-        Date | Time | Action | Symbol | Cost | Quantity | Amount | Balance
+        Date | User | Action | Symbol | Cost | Quantity | Amount | Balance
         """
-        pass
+        if cost != 0 and quantity != 0:
+            amount = cost * quantity
+        else:
+            cost = 0
+            quantity = 0
+            if amount <= 0:
+                return
+
+        transaction = pandas.DataFrame({'Name': user,
+                                        'Action': action,
+                                        'Symbol': symbol,
+                                        'Cost': cost,
+                                        'Quantity': quantity,
+                                        'Amount': cost * quantity,
+                                        'Balance': new_balance
+                                        },
+                                       index=[pandas.Timestamp('now')])
+        self.log.append(transaction)
+        return
