@@ -17,7 +17,10 @@ class Person():
         """
         Increase balance in the account
         """
-        self.balance = self.balance + deposit
+        if deposit < 0:
+            return
+        else:
+            self.balance += deposit
 
     def get_stock_quote(self, symbol):
         """

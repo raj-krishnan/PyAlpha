@@ -2,11 +2,15 @@ import unittest
 
 from pyalpha.data_structures.HistoricalStock import HistoricalStock
 from pyalpha.data_structures.Stock import Stock
+from pyalpha.portfolio.portfolio import Portfolio
 
 
 class PortfolioTest(unittest.TestCase):
-    def setUp(self):
-        pass
+    @classmethod
+    def setUpClass(cls):
+        cls.pf = Portfolio()
+        cls.rich = cls.pf.add_person("Rich", 1000000)
+        cls.poor = cls.pf.add_person("Poor", 10)
 
     def test_stock_price_fetch(self):
         tesla = Stock()
@@ -20,22 +24,32 @@ class PortfolioTest(unittest.TestCase):
         self.assertTrue(tesla_historical.low > 0)
 
     def test_get_stock_quote(self):
-        pass
+        value = PortfolioTest.rich.get_stock_quote("TSLA")
+        self.assertTrue(value > 0)
 
     def test_buy_stock_sufficient_balance(self):
-        pass
+        self.assertTrue(PortfolioTest.rich.buy_stock("AAPL", 2))
 
     def test_buy_stock_insufficient_balance(self):
-        pass
+        self.assertFalse(PortfolioTest.poor.buy_stock("AAPL", 20))
 
     def test_sell_stock_sufficient_stocks_available(self):
-        pass
+        self.assertTrue(PortfolioTest.rich.sell_stock("AAPL", 1))
 
     def test_sell_stock_insufficient_stocks_available(self):
-        pass
+        self.assertTrue(PortfolioTest.rich.sell_stock("AAPL", 20))
 
     def test_funds_deposit(self):
-        pass
+        deposit = 1000
+        balance = PortfolioTest.rich.balance
+        PortfolioTest.rich.add_funds(deposit)
+        self.assertEqual(balance + deposit, PortfolioTest.rich.balance)
+
+    def test_funds_withdrawal(self):
+        withdrawal = 1000
+        balance = PortfolioTest.rich.balance
+        PortfolioTest.rich.add_funds(-1 * withdrawal)
+        self.assertEqual(balance, PortfolioTest.rich.balance) # Should not withdraw funds
 
     def test_transaction_history(self):
         pass
