@@ -1,13 +1,21 @@
 import ystockquote
 
 
+class StockNotFoundException(Exception):
+    pass
+
+
 class Stock:
     def __init__(self, symbol="TSLA"):
         self.symbol = symbol
         self.price = 0
 
     def fetch_price(self):
-        self.price = float(ystockquote.get_price(self.symbol))
+        price = ystockquote.get_price(self.symbol)
+        if price == 'N/A':
+            raise StockNotFoundException
+        else:
+            self.price = float(price)
 
     def __repr__(self):
         return self.symbol
