@@ -91,5 +91,5 @@ class Portfolio:
                                         'Balance': new_balance
                                         },
                                        index=[pandas.Timestamp('now')])
-        self.log.append(transaction)
+        self.log = self.log.append(transaction)
         return
