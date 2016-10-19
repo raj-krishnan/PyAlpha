@@ -10,9 +10,10 @@ class BaseModel(peewee.Model):
 
 class TablePerson(BaseModel):
     """
-    Database Table containing names of people
+    Database Table containing names of people along with their balances.
     """
     name = peewee.CharField(null=False)
+    balance = peewee.FloatField()
 
 
 class TablePortfolio(BaseModel):
@@ -23,8 +24,8 @@ class TablePortfolio(BaseModel):
         - Quantity Held
     """
     person = peewee.ForeignKeyField(TablePerson, related_name='portfolio')
-    stock = peewee.CharField()
-    purchase_price = peewee.IntegerField()
+    stock = peewee.CharField(null=False)
+    average_price = peewee.FloatField()
     quantity = peewee.IntegerField()
 
 
