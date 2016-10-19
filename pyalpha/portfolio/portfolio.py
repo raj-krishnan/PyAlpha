@@ -68,7 +68,7 @@ class Portfolio:
         """
         self.balance += deposit
 
-    def logger(self, user, action, symbol, cost=0, quantity=0, amount=0, new_balance):
+    def logger(self, user, action, symbol, new_balance, cost=0, quantity=0, amount=0):
         """
         Logs all actions performed: BUY, SELL, ADD_FUNDS
         Format:
@@ -87,7 +87,7 @@ class Portfolio:
                                         'Symbol': symbol,
                                         'Cost': cost,
                                         'Quantity': quantity,
-                                        'Amount': cost*quantity,
+                                        'Amount': amount,
                                         'Balance': new_balance
                                         },
                                        index=[pandas.Timestamp('now')])
