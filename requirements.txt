@@ -1,4 +1,8 @@
 nose==1.3.7
 numpy==1.11.2
+pandas==0.19.0
 peewee==2.8.5
+python-dateutil==2.5.3
+pytz==2016.7
+six==1.10.0
 ystockquote==0.2.4

@@ -8,6 +8,7 @@ Dependencies
 ------------
 
 - peewee
+- pandas
 - ystockquote
 
 .. |Build_Status| image:: https://travis-ci.org/raj-krishnan/PyAlpha.svg?branch=master
