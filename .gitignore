@@ -380,4 +380,5 @@ TSWLatexianTemp*
 # KBibTeX
 *~[0-9]*
 
-
+# Ipython Notebooks
+*.ipynb
