@@ -20,7 +20,7 @@ class TablePortfolio(BaseModel):
     """
     Database Table containing:
         - Stocks held
-        - Their Purchase price
+        - Their Average price
         - Quantity Held
     """
     person = peewee.ForeignKeyField(TablePerson, related_name='portfolio')
@@ -28,6 +28,20 @@ class TablePortfolio(BaseModel):
     average_price = peewee.FloatField()
     quantity = peewee.IntegerField()
 
+
+class TableLogger(BaseModel):
+    """
+    Database Table containing:
+        - Stocks
+        - Their Purchase/ Selling price
+        - Quantity of stocks in the transaction
+        - Timestamp of the transaction
+    """
+    person = peewee.ForeignKeyField(TablePerson, related_name='logger')
+    stock = peewee.CharField(null=False)
+    transaction_price = peewee.FloatField()
+    quantity = peewee.IntegerField()
+    timestamp = peewee.DateTimeField()
 
 # def before_request_handler():
 #     database.connect()

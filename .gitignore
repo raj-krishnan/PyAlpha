@@ -197,3 +197,6 @@ flycheck_*.el
 
 # SQLite database files
 *.db
+
+# Ipython Notebooks
+*.ipynb
