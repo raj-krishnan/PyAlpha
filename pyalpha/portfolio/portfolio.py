@@ -154,25 +154,24 @@ class Person():
         records = pandas.DataFrame()
         for record in portfolio_record:
             record_df = pandas.DataFrame({'Stock': record.stock,
-                                            'Average Price': record.average_price,
-                                            'Quantity': record.quantity,
-                                            },
-                                           index=[pandas.Timestamp('now')])
+                                          'Average Price': record.average_price,
+                                          'Quantity': record.quantity,
+                                          },
+                                         index=[pandas.Timestamp('now')])
             records = records.append(record_df)
         return records
         # print('The portfolio details of %s:' % (self.name))
         # print(['Stock', 'Average Price', 'Quantity'])
         #     print([record.stock, record.average_price, record.quantity])
 
-    # def get_transaction_history(self, user=""):
-    #     """
-    #     Get list of transactions made from log file
-    #     """
-    #     return self.log.loc[self.log['Name'] == user]
+        # def get_transaction_history(self, user=""):
+        #     """
+        #     Get list of transactions made from log file
+        #     """
+        #     return self.log.loc[self.log['Name'] == user]
 
 
 class Portfolio:
-
     def __init__(self):
         models.setup_portfolio_database()
         # Contains 'name of the person' as the key, with the 'Person object' as
