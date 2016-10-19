@@ -2,15 +2,14 @@ from pyalpha.portfolio import models
 from pyalpha.data_structures.Stock import Stock
 
 
-class Portfolio:
+class Person():
+    """
+    Object with
+    """
 
-    def __init__(self, name="", initial_balance=20000):
-        self.name = name
+    def __init__(self, person_name, initial_balance):
+        self.name = person_name
         self.balance = initial_balance
-        # is this line correct (that is we are calling this function every time
-        # that we add a new person)
-        models.setup_portfolio_database()
-        models.TablePerson.insert(name=self.name).execute()
 
     def get_stock_quote(self, symbol):
         """
@@ -22,27 +21,93 @@ class Portfolio:
 
     def buy_stock(self, symbol, quantity):
         """
-        Buy a stock
+        Buy a given amount of a stock
         """
         stock_price = self.get_stock_quote(symbol)
-        new_stock = models.TablePortfolio(
-            name=self.name, stock=symbol,
-            purchase_price=stock_price, quantity=quantity)
-        new_stock.save()
+        person_record = models.TablePerson.get(
+            models.TablePerson.name == self.name)
+        portfolio_record = (models.TablePortfolio
+                            .select()
+                            .where(models.TablePortfolio.person == person_record,
+                                   models.TablePortfolio.stock == symbol))
+        if portfolio_record.exists():
+            new_average = (portfolio_record.average_price * portfolio_record.quantity +
+                           stock_price * quantity) / (portfolio_record.quantity + quantity)
+            # Modify entry in TablePortfolio
+            portfolio_record.average_price = new_average
+            portfolio_record.quantity = portfolio_record.quantity + quantity
+            portfolio_record.save()
+        else:
+            new_average = stock_price
+            # Add entry to TablePortfolio
+            new_portfolio_record = models.TablePortfolio(
+                person=person_record, stock=symbol,
+                average_price=new_average, quantity=quantity)
+            new_portfolio_record.save()
+
+        # # Add/modify entry in TablePortfolio
+        # new_portfolio_record = models.TablePortfolio(
+        #     person=person_record, stock=symbol,
+        #     average_price=new_average, quantity=quantity)
+        # new_portfolio_record.save()
+
+        # Update the balance of the person
         self.balance = self.balance - stock_price * quantity
+        # Modify entry in TablePerson
+        person_record.balance = self.balance
+        person_record.save()
 
     def sell_stock(self, symbol, quantity):
         """
-        Sell a stock
+        Sell the specified amount of a stock
         """
         stock_price = self.get_stock_quote(symbol)
-        models.TablePortfolio.select().where(
-            models.TablePortfolio.person == self.name).exists()
-        new_stock = models.TablePortfolio(
-            person=self.name, stock=symbol,
-            purchase_price=stock_price, quantity=quantity)
-        new_stock.save()
-        self.balance = self.balance - stock_price * quantity
+        person_record = models.TablePerson.get(
+            models.TablePerson.name == self.name)
+        portfolio_record = (models.TablePortfolio
+                            .select()
+                            .where(models.TablePortfolio.person == person_record,
+                                   models.TablePortfolio.stock == symbol))
+        if portfolio_record.exists():
+            if quantity < portfolio_record.quantity:
+                new_average = (portfolio_record.average_price * portfolio_record.quantity -
+                               stock_price * quantity) / (portfolio_record.quantity - quantity)
+            elif quantity == portfolio_record.quantity:
+                new_average = 0
+            # Modify entry in TablePortfolio
+            portfolio_record.average_price = new_average
+            portfolio_record.quantity = portfolio_record.quantity - quantity
+            portfolio_record.save()
+
+        # Modify entry in TablePortfolio
+        # new_portfolio_record = models.TablePortfolio(
+        #     person=person_record, stock=symbol,
+        #     average_price=new_average, quantity=quantity)
+        # new_portfolio_record.save()
+        # Update the balance of the person
+        self.balance = self.balance + stock_price * quantity
+        # Modify entry in TablePerson
+        person_record.balance = self.balance
+        person_record.save()
+
+
+class Portfolio:
+
+    def __init__(self):
+        models.setup_portfolio_database()
+        # Contains 'name of the person' as the key, with the 'People object' as
+        # the value
+        self.people = {}
+
+    def add_person(self, person_name="", initial_balance=0):
+        """
+        Adds a person along with his/her balance to the database
+        """
+        models.TablePerson.insert(
+            name=person_name, balance=initial_balance).execute()
+        person = Person(person_name, initial_balance)
+        self.people.update({person_name: person})
+        return person
 
     def view_portfolio(self):
         """
