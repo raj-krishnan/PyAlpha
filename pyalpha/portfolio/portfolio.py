@@ -1,3 +1,5 @@
+import pandas
+
 from pyalpha.portfolio import models
 from pyalpha.data_structures.Stock import Stock
 
@@ -11,6 +13,7 @@ class Portfolio:
         # that we add a new person)
         models.setup_portfolio_database()
         models.TablePerson.insert(name=self.name).execute()
+        self.log = pandas.DataFrame()
 
     def get_stock_quote(self, symbol):
         """
@@ -50,11 +53,14 @@ class Portfolio:
         """
         pass
 
-    def get_transaction_history(self):
+    def get_transaction_history(self, user=None):
         """
         Get list of transactions made from log file
         """
-        pass
+        if user is None:
+            return self.log
+        else:
+            return self.log.loc[self.log['Name'] == user]
 
     def add_funds(self, deposit):
         """
@@ -62,10 +68,28 @@ class Portfolio:
         """
         self.balance += deposit
 
-    def logger(self, action, symbol, cost, quantity, balance):
+    def logger(self, user, action, symbol, cost=0, quantity=0, amount=0, new_balance):
         """
         Logs all actions performed: BUY, SELL, ADD_FUNDS
         Format:
-        Date | Time | Action | Symbol | Cost | Quantity | Amount | Balance
+        Date | User | Action | Symbol | Cost | Quantity | Amount | Balance
         """
-        pass
+        if cost != 0 and quantity != 0:
+            amount = cost * quantity
+        else:
+            cost = 0
+            quantity = 0
+            if amount <= 0:
+                return
+
+        transaction = pandas.DataFrame({'Name': user,
+                                        'Action': action,
+                                        'Symbol': symbol,
+                                        'Cost': cost,
+                                        'Quantity': quantity,
+                                        'Amount': cost*quantity,
+                                        'Balance': new_balance
+                                        },
+                                       index=[pandas.Timestamp('now')])
+        self.log.append(transaction)
+        return
