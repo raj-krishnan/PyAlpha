@@ -36,10 +36,11 @@ class Person():
         """
         Increase balance in the account
         """
-        if (deposit < 0):
+        if deposit < 0:
             err = InputError(
                 deposit, ', which is the amount to be deposited is positive')
             print(err.expression, err.message)
+            return
 
         self.balance = self.balance + deposit
 
@@ -192,7 +193,7 @@ class Portfolio:
         """
         return self.log
 
-    def logger(self, user, action, symbol, cost=0, quantity=0, amount=0, new_balance):
+    def logger(self, user, action, symbol, new_balance, cost=0, quantity=0, amount=0):
         """
         Logs all actions performed: BUY, SELL, ADD_FUNDS
         Format:
@@ -211,7 +212,7 @@ class Portfolio:
                                         'Symbol': symbol,
                                         'Cost': cost,
                                         'Quantity': quantity,
-                                        'Amount': cost * quantity,
+                                        'Amount': amount,
                                         'Balance': new_balance
                                         },
                                        index=[pandas.Timestamp('now')])
