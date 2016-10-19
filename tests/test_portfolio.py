@@ -45,7 +45,7 @@ class Test_Portfolio(unittest.TestCase):
         self.assertTrue(Test_Portfolio.rich.sell_stock("AAPL", 1))
 
     def test_sell_stock_insufficient_stocks_available(self):
-        self.assertTrue(Test_Portfolio.rich.sell_stock("AAPL", 20))
+        self.assertFalse(Test_Portfolio.rich.sell_stock("AAPL", 20))
 
     def test_funds_deposit(self):
         deposit = 1000
