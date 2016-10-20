@@ -10,15 +10,15 @@ class Stock:
         self.symbol = symbol
         self.price = 0
 
+    def __repr__(self):
+        return self.symbol
+
+    def __str__(self):
+        return self.symbol
+
     def fetch_price(self):
         price = ystockquote.get_price(self.symbol)
         if price == 'N/A':
             raise StockNotFoundException
         else:
             self.price = float(price)
-
-    def __repr__(self):
-        return self.symbol
-
-    def __str__(self):
-        return self.symbol

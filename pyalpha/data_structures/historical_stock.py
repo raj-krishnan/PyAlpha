@@ -13,6 +13,12 @@ class HistoricalStock:
         self.open = 0
         self.volume = 0
 
+    def __repr__(self):
+        return self.symbol
+
+    def __str__(self):
+        return self.symbol
+
     def fetch_prices(self):
         data = ystockquote.get_historical_prices(self.symbol, self.date, self.date)[self.date]
 
@@ -22,9 +28,3 @@ class HistoricalStock:
         self.low = float(data['Low'])
         self.open = float(data['Open'])
         self.volume = float(data['Volume'])
-
-    def __repr__(self):
-        return self.symbol
-
-    def __str__(self):
-        return self.symbol

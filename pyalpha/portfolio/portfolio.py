@@ -1,7 +1,7 @@
 import pandas
 
 from pyalpha.portfolio import models
-from pyalpha.data_structures.Stock import Stock
+from pyalpha.data_structures.stock import Stock
 
 
 class InputError(Exception):

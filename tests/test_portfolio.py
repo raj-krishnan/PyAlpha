@@ -1,7 +1,7 @@
 import unittest
 
-from pyalpha.data_structures.HistoricalStock import HistoricalStock
-from pyalpha.data_structures.Stock import Stock
+from pyalpha.data_structures.historical_stock import HistoricalStock
+from pyalpha.data_structures.stock import Stock
 from pyalpha.portfolio.portfolio import Portfolio
 
 
