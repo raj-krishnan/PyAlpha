@@ -42,7 +42,7 @@ class Person():
             print(err.expression, err.message)
             return
 
-        self.balance = self.balance + deposit
+        self.balance += deposit
 
     def get_stock_quote(self, symbol):
         """
@@ -79,7 +79,7 @@ class Person():
                            stock_price * quantity) / (portfolio_record.quantity + quantity)
             # Modify entry in TablePortfolio
             portfolio_record.average_price = new_average
-            portfolio_record.quantity = portfolio_record.quantity + quantity
+            portfolio_record.quantity += quantity
             portfolio_record.save()
         else:
             new_average = stock_price
@@ -122,11 +122,10 @@ class Person():
                                stock_price * quantity) / (portfolio_record.quantity - quantity)
                 # Modify entry in TablePortfolio
                 portfolio_record.average_price = new_average
-                portfolio_record.quantity = portfolio_record.quantity - quantity
+                portfolio_record.quantity -= quantity
                 portfolio_record.save()
             elif quantity == portfolio_record.quantity:
                 # All the holdings of a stock are sold
-                new_average = 0
                 portfolio_record.delete_instance()
             else:
                 # The amount to sell is more than what the person holds
@@ -194,34 +193,34 @@ class Portfolio:
         self.person.update({person_name: person})
         return person
 
-    def get_transaction_history(self):
-        """
-        Get list of transactions made from log file
-        """
-        return self.log
-
-    def logger(self, user, action, symbol, new_balance, cost=0, quantity=0, amount=0):
-        """
-        Logs all actions performed: BUY, SELL, ADD_FUNDS
-        Format:
-        Date | User | Action | Symbol | Cost | Quantity | Amount | Balance
-        """
-        if cost != 0 and quantity != 0:
-            amount = cost * quantity
-        else:
-            cost = 0
-            quantity = 0
-            if amount <= 0:
-                return
-
-        transaction = pandas.DataFrame({'Name': user,
-                                        'Action': action,
-                                        'Symbol': symbol,
-                                        'Cost': cost,
-                                        'Quantity': quantity,
-                                        'Amount': amount,
-                                        'Balance': new_balance
-                                        },
-                                       index=[pandas.Timestamp('now')])
-        self.log = self.log.append(transaction)
-        return
+    # def get_transaction_history(self):
+    #     """
+    #     Get list of transactions made from log file
+    #     """
+    #     return self.log
+    #
+    # def logger(self, user, action, symbol, new_balance, cost=0, quantity=0, amount=0):
+    #     """
+    #     Logs all actions performed: BUY, SELL, ADD_FUNDS
+    #     Format:
+    #     Date | User | Action | Symbol | Cost | Quantity | Amount | Balance
+    #     """
+    #     if cost != 0 and quantity != 0:
+    #         amount = cost * quantity
+    #     else:
+    #         cost = 0
+    #         quantity = 0
+    #         if amount <= 0:
+    #             return
+    #
+    #     transaction = pandas.DataFrame({'Name': user,
+    #                                     'Action': action,
+    #                                     'Symbol': symbol,
+    #                                     'Cost': cost,
+    #                                     'Quantity': quantity,
+    #                                     'Amount': amount,
+    #                                     'Balance': new_balance
+    #                                     },
+    #                                    index=[pandas.Timestamp('now')])
+    #     self.log = self.log.append(transaction)
+    #     return
