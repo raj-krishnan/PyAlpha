@@ -24,7 +24,7 @@ class TestPortfolio(unittest.TestCase):
         self.assertTrue(tesla_historical.low > 0)
 
     def test_get_stock_quote(self):
-        value = TestPortfolio.rich.get_stock_quote("TSLA")
+        value = TestPortfolio.rich._get_stock_quote("TSLA")
         self.assertTrue(value > 0)
 
     def test_buy_stock_sufficient_balance(self):

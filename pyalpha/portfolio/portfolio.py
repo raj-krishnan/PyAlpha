@@ -78,7 +78,8 @@ class Person:
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
-                quantity, ', which is the amount of stock to be purchased can only be a positive integer')
+                quantity, ', which is the amount of stock to be purchased \
+                can only be a positive integer')
             print(err.expression, err.message)
             return False
 
@@ -125,7 +126,8 @@ class Person:
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
-                quantity, ', which is the amount of stock to be sold can only be a positive integer')
+                quantity, ', which is the amount of stock to be sold \
+                can only be a positive integer')
             print(err.expression, err.message)
             return False
 
