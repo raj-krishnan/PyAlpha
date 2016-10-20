@@ -62,12 +62,6 @@ class TestPortfolio(unittest.TestCase):
         # Should not withdraw funds
         self.assertEqual(balance, TestPortfolio.rich.balance)
 
-    def test_transaction_history(self):
-        pass
-
-    def test_portfolio_contents(self):
-        pass
-
     def test_check_logs(self):
         self.assertTrue(len(TestPortfolio.rich.view_portfolio().axes[0]))
 

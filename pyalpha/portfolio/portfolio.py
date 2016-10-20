@@ -4,17 +4,14 @@ from pyalpha.portfolio import models
 from pyalpha.data_structures.Stock import Stock
 
 
-class Error(Exception):
-    """Base class for exceptions in this module."""
-    pass
-
-
-class InputError(Error):
+class InputError(Exception):
     """
     Exception raised for errors in the input.
-    Attributes:
-        expression -- input expression in which the error occurred
-        message -- explanation of the error
+
+    Attributes
+    ----------
+    expression : input expression in which the error occurred
+    message : explanation of the error
     """
 
     def __init__(self, expression, message):
@@ -22,15 +19,37 @@ class InputError(Error):
         self.message = message
 
 
-class Person():
+class Person:
     """
-    Object with
+    A Person object will provide accesss to handle the portfolio of a
+    single person
+
+    Parameters
+    ----------
+    person_name : string
+        Name of the person.
+    initial_balance : float or int
+        Initial balance in the person's portfolio
+
+    Attributes
+    ----------
+    name : string
+        name of the person
+    balance : float or int
+        balance in hand
+
+    Methods
+    -------
+    * add_funds(self, deposit)
+    * buy_stock(self, symbol, quantity)
+    * sell_stock(self, symbol, quantity)
+    * view_portfolio(self)
     """
 
-    def __init__(self, person_name, initial_balance, log):
+    def __init__(self, person_name, initial_balance):
         self.name = person_name
         self.balance = initial_balance
-        self.log = log
+        # self.log = log
 
     def add_funds(self, deposit):
         """
@@ -44,7 +63,7 @@ class Person():
 
         self.balance += deposit
 
-    def get_stock_quote(self, symbol):
+    def _get_stock_quote(self, symbol):
         """
         Get the current price of a stock
         """
@@ -54,7 +73,8 @@ class Person():
 
     def buy_stock(self, symbol, quantity):
         """
-        Buy a given amount of a stock
+        - Buy the given 'quantity' of stock specified by 'symbol'
+        - Returns True if the transaction is successful and False otherwise
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
@@ -62,7 +82,7 @@ class Person():
             print(err.expression, err.message)
             return False
 
-        stock_price = self.get_stock_quote(symbol)
+        stock_price = self._get_stock_quote(symbol)
         if stock_price * quantity > self.balance:
             # Insufficient Funds
             return False
@@ -100,7 +120,8 @@ class Person():
 
     def sell_stock(self, symbol, quantity):
         """
-        Sell the specified amount of a stock
+        - Sell the given 'quantity' of stock specified by 'symbol'
+        - Returns True if the transaction is successful and False otherwise
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
@@ -108,7 +129,7 @@ class Person():
             print(err.expression, err.message)
             return False
 
-        stock_price = self.get_stock_quote(symbol)
+        stock_price = self._get_stock_quote(symbol)
         person_record = models.TablePerson.get(
             models.TablePerson.name == self.name)
         portfolio_record = (models.TablePortfolio
@@ -143,7 +164,9 @@ class Person():
 
     def view_portfolio(self):
         """
-        View list of stocks owned, their quantities and value
+        - View list of stocks owned, their quantities and value
+        - Returns pandas.DataFrame object which can be printed to view
+          the portfolio of the person
         """
         person_record = models.TablePerson.get(
             models.TablePerson.name == self.name)
@@ -161,24 +184,28 @@ class Person():
             records = records.append(record_df)
             i = i + 1
         return records
-        # print('The portfolio details of %s:' % (self.name))
-        # print(['Stock', 'Average Price', 'Quantity'])
-        #     print([record.stock, record.average_price, record.quantity])
-
-        # def get_transaction_history(self, user=""):
-        #     """
-        #     Get list of transactions made from log file
-        #     """
-        #     return self.log.loc[self.log['Name'] == user]
 
 
 class Portfolio:
+    """
+    A Portfolio object handles the database containing portfolio details
+    of people.
+
+    Attributes
+    ----------
+    person : dictionary
+        Contains 'name of the person' as the key, with
+        corresponding'Person object' as the value
+
+    Methods
+    -------
+    * add_person(self, person_name, initial_balance)
+    """
+
     def __init__(self):
         models.setup_portfolio_database()
-        # Contains 'name of the person' as the key, with the 'Person object' as
-        # the value
         self.person = {}
-        self.log = pandas.DataFrame()
+        # self.log = pandas.DataFrame()
 
     def add_person(self, person_name="", initial_balance=0):
         """
@@ -191,38 +218,6 @@ class Portfolio:
             return
         models.TablePerson.insert(
             name=person_name, balance=initial_balance).execute()
-        person = Person(person_name, initial_balance, self.log)
+        person = Person(person_name, initial_balance)
         self.person.update({person_name: person})
         return person
-
-    # def get_transaction_history(self):
-    #     """
-    #     Get list of transactions made from log file
-    #     """
-    #     return self.log
-    #
-    # def logger(self, user, action, symbol, new_balance, cost=0, quantity=0, amount=0):
-    #     """
-    #     Logs all actions performed: BUY, SELL, ADD_FUNDS
-    #     Format:
-    #     Date | User | Action | Symbol | Cost | Quantity | Amount | Balance
-    #     """
-    #     if cost != 0 and quantity != 0:
-    #         amount = cost * quantity
-    #     else:
-    #         cost = 0
-    #         quantity = 0
-    #         if amount <= 0:
-    #             return
-    #
-    #     transaction = pandas.DataFrame({'Name': user,
-    #                                     'Action': action,
-    #                                     'Symbol': symbol,
-    #                                     'Cost': cost,
-    #                                     'Quantity': quantity,
-    #                                     'Amount': amount,
-    #                                     'Balance': new_balance
-    #                                     },
-    #                                    index=[pandas.Timestamp('now')])
-    #     self.log = self.log.append(transaction)
-    #     return

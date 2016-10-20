@@ -43,13 +43,6 @@ class TableLogger(BaseModel):
     quantity = peewee.IntegerField()
     timestamp = peewee.DateTimeField()
 
-# def before_request_handler():
-#     database.connect()
-
-
-# def after_request_handler():
-#     database.close()
-
 
 def setup_portfolio_database():
     """
