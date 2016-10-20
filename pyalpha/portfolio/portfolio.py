@@ -166,15 +166,14 @@ class Person():
         # print(['Stock', 'Average Price', 'Quantity'])
         #     print([record.stock, record.average_price, record.quantity])
 
-    # def get_transaction_history(self, user=""):
-    #     """
-    #     Get list of transactions made from log file
-    #     """
-    #     return self.log.loc[self.log['Name'] == user]
+        # def get_transaction_history(self, user=""):
+        #     """
+        #     Get list of transactions made from log file
+        #     """
+        #     return self.log.loc[self.log['Name'] == user]
 
 
 class Portfolio:
-
     def __init__(self):
         models.setup_portfolio_database()
         # Contains 'name of the person' as the key, with the 'Person object' as
