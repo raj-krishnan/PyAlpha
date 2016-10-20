@@ -38,6 +38,7 @@ class TestPortfolio(unittest.TestCase):
 
     def test_buy_stock_sufficient_balance(self):
         self.assertTrue(TestPortfolio.rich.buy_stock("AAPL", 2))
+        self.assertTrue(TestPortfolio.rich.buy_stock("AAPL", 2))
 
     def test_buy_stock_insufficient_balance(self):
         self.assertFalse(TestPortfolio.poor.buy_stock("AAPL", 20))
@@ -68,7 +69,7 @@ class TestPortfolio(unittest.TestCase):
         pass
 
     def test_check_logs(self):
-        pass
+        self.assertTrue(len(TestPortfolio.rich.view_portfolio().axes[0]))
 
     def tearDown(self):
         pass
