@@ -22,7 +22,7 @@ class InputError(Error):
         self.message = message
 
 
-class Person():
+class Person:
     """
     Object with
     """
@@ -159,7 +159,7 @@ class Person():
                                           },
                                          index=[i])
             records = records.append(record_df)
-            i = i + 1
+            i += 1
         return records
         # print('The portfolio details of %s:' % (self.name))
         # print(['Stock', 'Average Price', 'Quantity'])
