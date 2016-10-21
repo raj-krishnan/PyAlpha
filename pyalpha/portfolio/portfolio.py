@@ -19,9 +19,9 @@ class InputError(Exception):
         self.message = message
 
 
-class Person:
+class UserPortfolio:
     """
-    A Person object will provide accesss to handle the portfolio of a
+    A UserPortfolio object will provide access to handle the portfolio of a
     single person
 
     Parameters
@@ -49,7 +49,6 @@ class Person:
     def __init__(self, person_name, initial_balance):
         self.name = person_name
         self.balance = initial_balance
-        # self.log = log
 
     def add_funds(self, deposit):
         """
@@ -87,12 +86,12 @@ class Person:
         if stock_price * quantity > self.balance:
             # Insufficient Funds
             return False
-        person_record = models.TablePerson.get(
-            models.TablePerson.name == self.name)
-        portfolio_record = (models.TablePortfolio
+        person_record = models.TableStockExchange.get(
+            models.TableStockExchange.name == self.name)
+        portfolio_record = (models.TableUserPortfolio
                             .select()
-                            .where(models.TablePortfolio.person == person_record,
-                                   models.TablePortfolio.stock == symbol))
+                            .where(models.TableUserPortfolio.person == person_record,
+                                   models.TableUserPortfolio.stock == symbol))
 
         if portfolio_record.exists():
             portfolio_record = portfolio_record.get()
@@ -105,7 +104,7 @@ class Person:
         else:
             new_average = stock_price
             # Add entry to TablePortfolio
-            new_portfolio_record = models.TablePortfolio(
+            new_portfolio_record = models.TableUserPortfolio(
                 person=person_record, stock=symbol,
                 average_price=new_average, quantity=quantity)
             new_portfolio_record.save()
@@ -132,12 +131,12 @@ class Person:
             return False
 
         stock_price = self._get_stock_quote(symbol)
-        person_record = models.TablePerson.get(
-            models.TablePerson.name == self.name)
-        portfolio_record = (models.TablePortfolio
+        person_record = models.TableStockExchange.get(
+            models.TableStockExchange.name == self.name)
+        portfolio_record = (models.TableUserPortfolio
                             .select()
-                            .where(models.TablePortfolio.person == person_record,
-                                   models.TablePortfolio.stock == symbol))
+                            .where(models.TableUserPortfolio.person == person_record,
+                                   models.TableUserPortfolio.stock == symbol))
         if portfolio_record.exists():
             portfolio_record = portfolio_record.get()
             if quantity < portfolio_record.quantity:
@@ -170,11 +169,11 @@ class Person:
         - Returns pandas.DataFrame object which can be printed to view
           the portfolio of the person
         """
-        person_record = models.TablePerson.get(
-            models.TablePerson.name == self.name)
-        portfolio_record = (models.TablePortfolio
+        person_record = models.TableStockExchange.get(
+            models.TableStockExchange.name == self.name)
+        portfolio_record = (models.TableUserPortfolio
                             .select()
-                            .where(models.TablePortfolio.person == person_record))
+                            .where(models.TableUserPortfolio.person == person_record))
         records = pandas.DataFrame()
         i = 1
         for record in portfolio_record:
@@ -188,28 +187,27 @@ class Person:
         return records
 
 
-class Portfolio:
+class StockExchange:
     """
-    A Portfolio object handles the database containing portfolio details
-    of people.
+    A StockExchange object handles the database containing portfolio details
+    of users.
 
     Attributes
     ----------
-    person : dictionary
+    users : dictionary
         Contains 'name of the person' as the key, with
         corresponding'Person object' as the value
 
     Methods
     -------
-    * add_person(self, person_name, initial_balance)
+    * add_user(self, person_name, initial_balance)
     """
 
     def __init__(self):
         models.setup_portfolio_database()
-        self.person = {}
-        # self.log = pandas.DataFrame()
+        self.users = {}
 
-    def add_person(self, person_name="", initial_balance=0):
+    def add_user(self, person_name="", initial_balance=0):
         """
         Adds a person along with his/her balance to the database
         """
@@ -218,8 +216,8 @@ class Portfolio:
                 initial_balance, ', which is the initial balance available to a person is positive')
             print(err.expression, err.message)
             return
-        models.TablePerson.insert(
+        models.TableStockExchange.insert(
             name=person_name, balance=initial_balance).execute()
-        person = Person(person_name, initial_balance)
-        self.person.update({person_name: person})
+        person = UserPortfolio(person_name, initial_balance)
+        self.users.update({person_name: person})
         return person

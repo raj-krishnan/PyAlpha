@@ -8,7 +8,7 @@ class BaseModel(peewee.Model):
         database = db  # this model uses the "portfolio.db" database
 
 
-class TablePerson(BaseModel):
+class TableStockExchange(BaseModel):
     """
     Database Table containing names of people along with their balances.
     """
@@ -16,14 +16,14 @@ class TablePerson(BaseModel):
     balance = peewee.FloatField()
 
 
-class TablePortfolio(BaseModel):
+class TableUserPortfolio(BaseModel):
     """
     Database Table containing:
         - Stocks held
         - Their Average price
         - Quantity Held
     """
-    person = peewee.ForeignKeyField(TablePerson, related_name='portfolio')
+    person = peewee.ForeignKeyField(TableStockExchange, related_name='portfolio')
     stock = peewee.CharField(null=False)
     average_price = peewee.FloatField()
     quantity = peewee.IntegerField()
@@ -37,7 +37,7 @@ class TableLogger(BaseModel):
         - Quantity of stocks in the transaction
         - Timestamp of the transaction
     """
-    person = peewee.ForeignKeyField(TablePerson, related_name='logger')
+    person = peewee.ForeignKeyField(TableStockExchange, related_name='logger')
     stock = peewee.CharField(null=False)
     transaction_price = peewee.FloatField()
     quantity = peewee.IntegerField()
@@ -49,11 +49,11 @@ def setup_portfolio_database():
     Create database tables if required
     """
     try:
-        TablePerson.create_table()
+        TableStockExchange.create_table()
     except peewee.OperationalError:
         print("People table already exists!")
 
     try:
-        TablePortfolio.create_table()
+        TableUserPortfolio.create_table()
     except peewee.OperationalError:
         print("Portfolio table already exists!")
