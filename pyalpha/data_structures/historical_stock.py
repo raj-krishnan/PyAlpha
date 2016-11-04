@@ -21,7 +21,9 @@ class HistoricalStock:
 
     def fetch_prices(self):
         data = ystockquote.get_historical_prices(self.symbol, self.date, self.date)[self.date]
+        self.set_data(data)
 
+    def set_data(self, data):
         self.adj_close = float(data['Adj Close'])
         self.close = float(data['Close'])
         self.high = float(data['High'])
