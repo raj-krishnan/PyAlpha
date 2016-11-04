@@ -1,7 +1,15 @@
+import datetime
 from abc import ABC, abstractmethod
+
+import ystockquote
+
+from pyalpha.data_structures.historical_stock import HistoricalStock
 
 
 class Alpha(ABC):
+    def __init__(self):
+        self.data = {}
+
     def construct_historical_data(self, stock_list, start_date, end_date,
                                   cache_data=1, use_cached_data=1):
         """
@@ -15,7 +23,17 @@ class Alpha(ABC):
         Stock lists are user defined
         Stock lists for SNP100 and SNP500 available in stock_lists.py
         """
-        pass
+        for stock in stock_list:
+            response = ystockquote.get_historical_prices(stock, start_date,
+                                                         end_date)
+            for date_str, value in response.items():
+                h = HistoricalStock(stock, date_str)
+                h.set_data(value)
+                d = date_str.split("-")
+                date = datetime.date(int(d[0]), int(d[1]), int(d[2]))
+                if date not in self.data.keys():
+                    self.data[date] = []
+                self.data[date].append(h)
 
     @abstractmethod
     def alpha(self, stock):
