@@ -1,4 +1,5 @@
 import peewee
+import datetime
 
 db = peewee.SqliteDatabase("portfolio.db")
 
@@ -23,7 +24,8 @@ class TableUserPortfolio(BaseModel):
         - Their Average price
         - Quantity Held
     """
-    person = peewee.ForeignKeyField(TableStockExchange, related_name='portfolio')
+    person = peewee.ForeignKeyField(
+        TableStockExchange, related_name='portfolio')
     stock = peewee.CharField(null=False)
     average_price = peewee.FloatField()
     quantity = peewee.IntegerField()
@@ -39,9 +41,13 @@ class TableLogger(BaseModel):
     """
     person = peewee.ForeignKeyField(TableStockExchange, related_name='logger')
     stock = peewee.CharField(null=False)
-    transaction_price = peewee.FloatField()
+    price = peewee.FloatField()
     quantity = peewee.IntegerField()
-    timestamp = peewee.DateTimeField()
+    total_quantity = peewee.IntegerField()
+    total_value = peewee.FloatField()
+    balance = peewee.FloatField()
+    buy_or_sell = peewee.CharField(choices = [('buy','buy'),('sell','sell')])
+    timestamp = peewee.DateTimeField(default=datetime.datetime.now)
 
 
 def setup_portfolio_database():
@@ -51,9 +57,14 @@ def setup_portfolio_database():
     try:
         TableStockExchange.create_table()
     except peewee.OperationalError:
-        print("People table already exists!")
+        print("Stock Exchange table already exists!")
 
     try:
         TableUserPortfolio.create_table()
     except peewee.OperationalError:
-        print("Portfolio table already exists!")
+        print("User Portfolio table already exists!")
+
+    try:
+        TableLogger.create_table()
+    except peewee.OperationalError:
+        print("Logger table already exists!")
