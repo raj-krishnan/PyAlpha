@@ -7,11 +7,16 @@ from pyalpha.data_structures.historical_stock import HistoricalStock
 
 
 class Alpha(ABC):
-    def __init__(self):
+    def __init__(self, stock_list, start_date, end_date, cache_data=True,
+                 use_cached_data=True):
+        self.start_date = start_date
+        self.end_date = end_date
+        self.stock_list = stock_list
         self.data = {}
+        self.use_cached_data = use_cached_data
+        self.cache_data = cache_data
 
-    def construct_historical_data(self, stock_list, start_date, end_date,
-                                  cache_data=1, use_cached_data=1):
+    def construct_historical_data(self):
         """
         Creates a data structure of historical stock data
         The data structure is a dictionary which maps the dates to
@@ -23,9 +28,9 @@ class Alpha(ABC):
         Stock lists are user defined
         Stock lists for SNP100 and SNP500 available in stock_lists.py
         """
-        for stock in stock_list:
-            response = ystockquote.get_historical_prices(stock, start_date,
-                                                         end_date)
+        for stock in self.stock_list:
+            response = ystockquote.get_historical_prices(stock, self.start_date,
+                                                         self.end_date)
             for date_str, value in response.items():
                 h = HistoricalStock(stock, date_str)
                 h.set_data(value)
