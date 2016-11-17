@@ -8,9 +8,9 @@ from pyalpha.portfolio.portfolio import StockExchange
 class TestStockExchange(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pf = StockExchange()
-        cls.rich = cls.pf.add_user("Rich", 1000000)
-        cls.poor = cls.pf.add_user("Poor", 10)
+        cls.se = StockExchange()
+        cls.rich = cls.se.add_user("Rich", 1000000)
+        cls.poor = cls.se.add_user("Poor", 10)
 
     def test_stock_price_fetch(self):
         tesla = Stock()
@@ -53,8 +53,19 @@ class TestStockExchange(unittest.TestCase):
         # Should not withdraw funds
         self.assertEqual(balance, TestStockExchange.rich.balance)
 
-    def test_check_logs(self):
+    def test_check_view_portfolio(self):
         self.assertTrue(len(TestStockExchange.rich.view_portfolio().axes[0]))
+
+    def test_log_user_portfolio(self):
+        self.assertTrue(len(TestStockExchange.rich.view_log().axes[0]))
+
+    def test_log_stock_exchange(self):
+        self.assertTrue(len(TestStockExchange.se.view_log().axes[0]))
+
+    def test_log_stock_exchange_contains_user_logs(self):
+        self.assertEqual(len(TestStockExchange.se.view_log().axes[0]),
+                         len(TestStockExchange.rich.view_log().axes[0]) +
+                         len(TestStockExchange.poor.view_log().axes[0]))
 
     def tearDown(self):
         pass
