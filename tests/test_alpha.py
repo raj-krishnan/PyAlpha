@@ -10,23 +10,31 @@ class AlphaDataset(Alpha):
 
 
 class TestAlpha(unittest.TestCase):
-    def test_dataset_creation_snp100(self):
-        alpha = AlphaDataset()
 
+    @classmethod
+    def setUpClass(cls):
         start_date = "2015-01-02"
         end_date = "2015-01-08"
-        alpha.construct_historical_data(stock_lists.SNP100,
-                                        start_date,
-                                        end_date)
-        keys = list(alpha.data.keys())
+        cls.alpha = AlphaDataset(stock_lists.SNP100,
+                                 start_date,
+                                 end_date)
+
+    def test_dataset_creation_snp100(self):
+        TestAlpha.alpha.construct_historical_data()
+        keys = list(TestAlpha.alpha.data.keys())
 
         self.assertEqual(len(keys), 5)
 
-        self.assertEqual(len(alpha.data[keys[0]]), len(alpha.data[keys[1]]))
+        self.assertEqual(len(TestAlpha.alpha.data[keys[0]]), len(TestAlpha.alpha.data[keys[1]]))
 
-        self.assertLess(5, len(alpha.data[keys[0]]))
+        self.assertLess(5, len(TestAlpha.alpha.data[keys[0]]))
 
-        for stock in alpha.data[keys[0]]:
+        for stock in TestAlpha.alpha.data[keys[0]]:
             self.assertLess(0.0, stock.close)
 
-        self.assertEqual(len(alpha.data[keys[0]]), len(stock_lists.SNP100))
+        self.assertEqual(len(TestAlpha.alpha.data[keys[0]]), len(stock_lists.SNP100))
+
+    def test_simulation(self):
+        TestAlpha.alpha.simulate()
+        for i in TestAlpha.alpha.returns:
+            self.assertTrue(i != 0)

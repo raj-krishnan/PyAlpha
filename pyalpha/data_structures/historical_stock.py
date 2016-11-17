@@ -12,6 +12,7 @@ class HistoricalStock:
         self.low = 0
         self.open = 0
         self.volume = 0
+        self.returns = 0
 
     def __repr__(self):
         return self.symbol
