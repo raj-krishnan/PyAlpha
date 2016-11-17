@@ -21,7 +21,9 @@ class HistoricalStock:
         return self.symbol
 
     def fetch_prices(self):
-        data = ystockquote.get_historical_prices(self.symbol, self.date, self.date)[self.date]
+        data = ystockquote.get_historical_prices(self.symbol,
+                                                 self.date,
+                                                 self.date)[self.date]
         self.set_data(data)
 
     def set_data(self, data):

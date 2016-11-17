@@ -25,14 +25,16 @@ class TestAlpha(unittest.TestCase):
 
         self.assertEqual(len(keys), 5)
 
-        self.assertEqual(len(TestAlpha.alpha.data[keys[0]]), len(TestAlpha.alpha.data[keys[1]]))
+        self.assertEqual(len(TestAlpha.alpha.data[keys[0]]),
+                         len(TestAlpha.alpha.data[keys[1]]))
 
         self.assertLess(5, len(TestAlpha.alpha.data[keys[0]]))
 
         for stock in TestAlpha.alpha.data[keys[0]]:
             self.assertLess(0.0, stock.close)
 
-        self.assertEqual(len(TestAlpha.alpha.data[keys[0]]), len(stock_lists.SNP100))
+        self.assertEqual(len(TestAlpha.alpha.data[keys[0]]),
+                         len(stock_lists.SNP100))
 
     def test_simulation(self):
         TestAlpha.alpha.simulate()

@@ -36,7 +36,8 @@ class Alpha(ABC):
         Stock lists for SNP100 and SNP500 available in stock_lists.py
         """
         for stock in self.stock_list:
-            response = ystockquote.get_historical_prices(stock, self.start_date,
+            response = ystockquote.get_historical_prices(stock,
+                                                         self.start_date,
                                                          self.end_date)
             print(stock)
             for date_str, value in response.items():
@@ -112,8 +113,8 @@ class Alpha(ABC):
                 quantity = int(alpha_stock[j] * self.funds
                                / (alpha_total * stock_prices_open[j]))
                 stock_vector.append(quantity)
-                return_on_stock = ((stock_prices_close[j] - stock_prices_open[j])
-                                   * quantity)
+                return_on_stock = ((stock_prices_close[j] -
+                                    stock_prices_open[j]) * quantity)
                 self.data[trading_day][j].returns = return_on_stock
                 returns_day += return_on_stock
 
@@ -123,4 +124,3 @@ class Alpha(ABC):
                 turnover_day = np.dot(stock_vector, stock_vector_old)
                 self.turnover.append(turnover_day)
             stock_vector_old = stock_vector
-

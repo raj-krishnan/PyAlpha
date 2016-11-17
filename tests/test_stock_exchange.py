@@ -12,6 +12,9 @@ class TestStockExchange(unittest.TestCase):
         cls.rich = cls.se.add_user("Rich", 1000000)
         cls.poor = cls.se.add_user("Poor", 10)
 
+    def test_add_user_initial_balance_to_be_positive(self):
+        self.assertIsNone(TestStockExchange.se.add_user("John", -10))
+
     def test_stock_price_fetch(self):
         tesla = Stock()
         tesla.fetch_price()
@@ -40,6 +43,9 @@ class TestStockExchange(unittest.TestCase):
     def test_sell_stock_insufficient_stocks_available(self):
         self.assertFalse(TestStockExchange.rich.sell_stock("AAPL", 20))
 
+    def test_sell_stock_stock_not_available(self):
+        self.assertFalse(TestStockExchange.rich.sell_stock("GOOGL", 10))
+
     def test_funds_deposit(self):
         deposit = 1000
         balance = TestStockExchange.rich.balance
@@ -62,7 +68,7 @@ class TestStockExchange(unittest.TestCase):
     def test_log_stock_exchange(self):
         self.assertTrue(len(TestStockExchange.se.view_log().axes[0]))
 
-    def test_log_stock_exchange_contains_user_logs(self):
+    def test_log_stock_exchange_contains_all_user_logs(self):
         self.assertEqual(len(TestStockExchange.se.view_log().axes[0]),
                          len(TestStockExchange.rich.view_log().axes[0]) +
                          len(TestStockExchange.poor.view_log().axes[0]))

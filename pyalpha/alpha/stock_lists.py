@@ -621,4 +621,3 @@ SNP500 = [
         "ZION",   # Zions Bancorp
         "ZTS",    # Zoetis
 ]
-

@@ -267,15 +267,18 @@ can only be a positive integer')
         records = pandas.DataFrame()
         for i, record in enumerate(logger_record, 1):
             record_df = pandas.DataFrame(
-                    {'Stock': record.stock,
-                     'Transaction Stock Price': record.price,
-                     'Transaction Stock Quantity': record.quantity,
-                     'Stock Quantity after Transaction': record.total_quantity,
-                     'Stock Value after Transaction': record.total_value,
-                     'Balance after Transaction': record.balance,
-                     'Transaction type': record.buy_or_sell,
-                     'The timestamp of the Transaction': record.timestamp
-                     },
+                    [[record.stock, record.buy_or_sell,
+                      record.price, record.quantity,
+                      record.timestamp, record.total_quantity,
+                      record.total_value, record.balance]],
+                    columns=[
+                        'Stock', 'Transaction type',
+                        'Transaction stock price',
+                        'Transaction stock quantity',
+                        'Timestamp of transaction',
+                        'Stock quantity after transaction',
+                        'Net investment in the stock after transaction',
+                        'Balance left after transaction'],
                     index=[i]
                                          )
             records = records.append(record_df)
@@ -356,12 +359,14 @@ available to the user should be positive')
         records = pandas.DataFrame()
         for i, record in enumerate(logger_record, 1):
             record_df = pandas.DataFrame(
-                    {'Stock': record.stock,
-                     'Transaction Stock Price': record.price,
-                     'Transaction Stock Quantity': record.quantity,
-                     'Transaction type': record.buy_or_sell,
-                     'The timestamp of the Transaction': record.timestamp
-                     },
+                    [[record.stock, record.buy_or_sell,
+                      record.price, record.quantity,
+                      record.timestamp]],
+                    columns=[
+                        'Stock', 'Transaction type',
+                        'Transaction stock price',
+                        'Transaction stock quantity',
+                        'Timestamp of transaction'],
                     index=[i]
                                          )
             records = records.append(record_df)
