@@ -9,6 +9,9 @@ from pyalpha.data_structures.historical_stock import HistoricalStock
 
 
 class Alpha(ABC):
+    """
+    Abstract class to compute alphas
+    """
     def __init__(self, stock_list, start_date, end_date, cache_data=True,
                  use_cached_data=True):
 
