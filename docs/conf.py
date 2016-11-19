@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# PyAplha documentation build configuration file, created by
+# PyAlpha documentation build configuration file, created by
 # sphinx-quickstart on Fri Nov 18 23:29:37 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -55,7 +55,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'PyAplha'
+project = 'PyAlpha'
 copyright = '2016, Raj Krishnan, Tejaswi K C'
 author = 'Raj Krishnan, Tejaswi K C'
 
@@ -140,7 +140,7 @@ html_theme = 'sphinx_rtd_theme'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'PyAplha v0.1'
+# html_title = 'PyAlpha v0.1'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -240,7 +240,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'PyAplhadoc'
+htmlhelp_basename = 'PyAlphadoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -266,7 +266,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'PyAplha.tex', 'PyAplha Documentation',
+    (master_doc, 'PyAlpha.tex', 'PyAlpha Documentation',
      'Raj Krishnan, Tejaswi K C', 'manual'),
 ]
 
@@ -308,7 +308,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pyaplha', 'PyAplha Documentation',
+    (master_doc, 'PyAlpha', 'PyAlpha Documentation',
      [author], 1)
 ]
 
@@ -323,8 +323,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'PyAplha', 'PyAplha Documentation',
-     author, 'PyAplha', 'One line description of project.',
+    (master_doc, 'PyAlpha', 'PyAlpha Documentation',
+     author, 'PyAlpha', 'One line description of project.',
      'Miscellaneous'),
 ]
 
