@@ -13,15 +13,18 @@ Dependencies
  - pandas
  - peewee
 
--------------
-Linux and OSX
--------------
+-------------------
+Installing with git
+-------------------
 
-To install PyAlpha, clone this repository by::
+This project is hosted at https://github.com/raj-krishnan/PyAlpha and can be installed using git:
 
-    $ git clone https://github.com/raj-krishnan/PyAlpha
+.. sourcecode:: bash
 
-To install dependencies, run::
+    $ git clone https://github.com/raj-krishnan/PyAlpha.git
+    $ cd PyAlpha
+
+Install the dependencies using::
 
     $ pip install -r requirements.txt
 

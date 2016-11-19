@@ -9,10 +9,12 @@ class InputError(Exception):
     """
     Exception raised for errors in the input.
 
-    Attributes
-    ----------
-    expression : input expression in which the error occurred
-    message : explanation of the error
+    **Attributes**:
+
+    expression :
+        Input expression in which the error occurred
+    message : string
+        Explanation of the error
     """
 
     def __init__(self, expression, message):
@@ -23,37 +25,39 @@ class InputError(Exception):
 class UserPortfolio:
     """
     A UserPortfolio object will provide access to handle the portfolio of a
-    single person
+    single person.
 
-    Parameters
-    ----------
+    **Parameters**:
+
     person_name : string
-        Name of the person.
+        Name of the person
     initial_balance : float or int
         Initial balance in the person's portfolio
 
-    Attributes
-    ----------
-    name : string
-        name of the person
-    balance : float or int
-        balance in hand
+    **Attributes**:
 
-    Methods
-    -------
-    * add_funds(self, deposit)
-    * buy_stock(self, symbol, quantity)
-    * sell_stock(self, symbol, quantity)
-    * view_portfolio(self)
+    name : string
+        Name of the person whose portfolio is being handled
+    balance : float
+        Current balance in the person's portfolio
+
+    **Methods**::
+
+    - add_funds(self, deposit)
+    - buy_stock(self, symbol, quantity)
+    - sell_stock(self, symbol, quantity)
+    - view_portfolio(self)
+    - view_log(self, symbol, start_date, end_date, start_time, end_time)
+
     """
 
     def __init__(self, person_name, initial_balance):
         self.name = person_name
-        self.balance = initial_balance
+        self.balance = float(initial_balance)
 
     def add_funds(self, deposit):
         """
-        Increase balance in the account
+        Increases balance in the account by the specified amount.
         """
         if deposit < 0:
             err = InputError(
@@ -61,7 +65,7 @@ class UserPortfolio:
             print(err.expression, err.message)
             return
 
-        self.balance += deposit
+        self.balance += float(deposit)
 
     def _get_stock_quote(self, symbol):
         """
@@ -87,8 +91,12 @@ class UserPortfolio:
 
     def buy_stock(self, symbol, quantity):
         """
-        - Buy the given 'quantity' of stock specified by 'symbol'
-        - Returns True if the transaction is successful and False otherwise
+        - Buy the given *quantity* of stock specified by *symbol*
+
+        :Returns:
+            - True if the transaction is successful
+            - False otherwise
+        
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
@@ -148,8 +156,12 @@ can only be a positive integer')
 
     def sell_stock(self, symbol, quantity):
         """
-        - Sell the given 'quantity' of stock specified by 'symbol'
-        - Returns True if the transaction is successful and False otherwise
+        - Sell the given *quantity* of stock specified by *symbol*
+
+        :Returns:
+            - True if the transaction is successful
+            - False otherwise
+
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
@@ -213,8 +225,11 @@ can only be a positive integer')
     def view_portfolio(self):
         """
         - View list of stocks owned, their quantities and value
-        - Returns pandas.DataFrame object which can be printed to view
-          the portfolio of the person
+
+        :Returns:
+            *pandas.DataFrame* object which can be printed to view
+            the portfolio of the person
+
         """
         person_record = models.TableStockExchange.get(
             models.TableStockExchange.name == self.name)
@@ -239,7 +254,15 @@ can only be a positive integer')
                  start_time=datetime.time.min,
                  end_time=datetime.time.max):
         """
-        - View the log
+        - View the log of the transactions which occured in the user's
+          portfolio
+        - All the date and time input parameters should be in the respective
+          *datetime.date* and *datetime.time* formats
+
+        :Returns:
+            *pandas.DataFrame* object which can be printed to view
+            the log of transactions
+
         """""
         person_record = models.TableStockExchange.get(
             models.TableStockExchange.name == self.name)
@@ -290,15 +313,17 @@ class StockExchange:
     A StockExchange object handles the database containing portfolio details
     of users.
 
-    Attributes
-    ----------
-    users : dictionary
-        Contains 'name of the person' as the key, with
-        corresponding'Person object' as the value
+    **Attributes**:
 
-    Methods
-    -------
-    * add_user(self, person_name, initial_balance)
+    users : dictionary
+        Contains *name* of the user as the key, with
+        corresponding *UserPortfolio* object as the value
+
+    **Methods**::
+
+    - add_user(self, person_name, initial_balance)
+    - view_log(self, symbol, start_date, end_date, start_time, end_time)
+
     """
 
     def __init__(self):
@@ -327,7 +352,15 @@ available to the user should be positive')
                  start_time=datetime.time.min,
                  end_time=datetime.time.max):
         """
-        - View Stock Exchange log
+        - View the log of the transactions which occured in the whole stock
+          exchange by all the users
+        - All the date and time input parameters should be in the respective
+          *datetime.date* and *datetime.time* formats
+
+        :Returns:
+            *pandas.DataFrame* object which can be printed to view
+            the log of transactions
+
         """
         if symbol is None:
             logger_record = (

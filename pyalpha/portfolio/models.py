@@ -20,9 +20,12 @@ class TableStockExchange(BaseModel):
 class TableUserPortfolio(BaseModel):
     """
     Database Table containing:
+
+        - ForeignKey as TableStockExchange
         - Stocks held
         - Their Average price
         - Quantity Held
+
     """
     person = peewee.ForeignKeyField(
         TableStockExchange, related_name='portfolio')
@@ -34,10 +37,17 @@ class TableUserPortfolio(BaseModel):
 class TableLogger(BaseModel):
     """
     Database Table containing:
+        
+        - ForeignKey as TableStockExchange
         - Stocks
         - Their Purchase/ Selling price
         - Quantity of stocks in the transaction
+        - Total quantity of the stock left after the transaction
+        - Total investment in the stock left after the transaction
+        - Balance left after the transaction
+        - Transaction type (buy ar sell)
         - Timestamp of the transaction
+
     """
     person = peewee.ForeignKeyField(TableStockExchange, related_name='logger')
     stock = peewee.CharField(null=False)

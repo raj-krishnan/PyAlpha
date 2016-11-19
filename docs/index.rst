@@ -35,6 +35,15 @@ Tutorials
 
     tutorials/tutorial.rst
 
+**********
+Installing
+**********
+
+.. toctree::
+    :maxdepth: 2
+
+    installation.rst
+
 ***********************
 Reference Documentation
 ***********************
