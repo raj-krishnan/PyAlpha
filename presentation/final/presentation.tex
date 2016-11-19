@@ -1,7 +1,7 @@
 \documentclass[serif,mathserif]{beamer}
 \usepackage{amsmath, amsfonts, epsfig, xspace}
-%\usepackage{algorithm,algorithmic}
-%\usepackage{pstricks,pst-node}
+\usepackage{algorithm,algorithmic}
+\usepackage{pstricks,pst-node}
 \usepackage{multimedia}
 \usepackage[normal,tight,center]{subfigure}
 \setlength{\subfigcapskip}{-.5em}
@@ -27,21 +27,77 @@
                   as per current prices on the share markets
             \item Build a module to compute the quality of various alphas
                   (weights for various stocks)
+            \item Hosted at \url{https://github.com/raj-krishnan/PyAlpha}
         \end{itemize}
 
     \end{frame}
 
     \begin{frame}
 
-        \frametitle{Source Code}
+        \frametitle{Tests}
+        
+        \textbf{Testsuite:}
+        \begin{figure}
+            \centering
+            \includegraphics[width = \linewidth]{testsuite.png}
+        \end{figure}
 
+    \end{frame}
+    
+    \begin{frame}{Coverage}
+
+        \textbf{Coverage:}
+        \begin{figure}
+            \centering
+            \includegraphics[width = \linewidth]{coverage.png}
+        \end{figure}
+        
+    \end{frame}
+    
+    \begin{frame}{Automation}
+    
         \begin{itemize}
-            \item Hosted at \url{https://github.com/raj-krishnan/PyAlpha}
-            \item Documentation hosted at \url{pyalpha.readthedocs.io/}
             \item Continuous Integration using \href{https://travis-ci.org/raj-krishnan/PyAlpha}{Travis}
             \item Coverage Testing using \href{https://coveralls.io/github/raj-krishnan/PyAlpha}{Coveralls}
         \end{itemize}
+        
+    \end{frame}
+    
+    \begin{frame}
 
+        \frametitle{Installation using git}
+
+        \begin{itemize}
+            \item git clone https://github.com/raj-krishnan/PyAlpha.git
+            \item cd PyAlpha
+            \item pip install -r requirements.txt
+            \item python setup.py install
+        \end{itemize}
+
+    \end{frame}
+    
+    \begin{frame}{Docs}
+    
+        \begin{itemize}
+            \item Documentation hosted at \url{http://pyalpha.readthedocs.io/}
+        \end{itemize}
+        
+    \end{frame}
+    
+    \begin{frame}{Code cleanliness}
+        
+        \begin{itemize}
+            \item Using PEP8
+        \end{itemize}
+        
+    \end{frame}
+    
+    \begin{frame}{Git commit graphs}
+    
+        % \begin{itemize}
+        %     \item 
+        % \end{itemize}
+        
     \end{frame}
 
     \begin{frame}
@@ -52,38 +108,19 @@
             \item pandas
             \item peewee
             \item ystockquote
-            \item numpy
         \end{itemize}
 
     \end{frame}
 
     \begin{frame}
 
-        \frametitle{Installation}
+        \frametitle{Portfolio Handling Demo}
 
-        \begin{itemize}
-            \item git clone https://github.com/raj-krishnan/PyAlpha.git
-            \item cd PyAlpha
-            \item pip install -r requirements.txt
-            \item python setup.py install
-            \item nosetests
-        \end{itemize}
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=\linewidth]{portfolio.png}
+        \end{figure}
 
-    \end{frame}
-
-    % \begin{frame}
-
-    %     \frametitle{Demo}
-
-    %     \begin{figure}[h]
-    %         \centering
-    %         \includegraphics[width=\linewidth]{demo.png}
-    %     \end{figure}
-
-    % \end{frame}
-
-    \begin{frame}
-        \centering \huge{Questions}
     \end{frame}
 
     \begin{frame}
