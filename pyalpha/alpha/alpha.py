@@ -78,7 +78,7 @@ class Alpha(ABC):
     def simulate(self):
         """
         Runs the simulation for the user-defined alpha
-        Calculates the cumulative return, drawdown, turnover
+        Calculates the cumulative return, turnover
         """
         self.turnover = [0]
         self.returns = []

@@ -2,7 +2,7 @@
 PyAlpha
 =======
 
-|Build_Status| |Coverage|
+|Build_Status| |Coverage| |Documentation|
 
 PyAlpha is a python toolbox for backtesting trading ideas. An Alpha is a 
 concrete trading idea that can be simulated historically.
@@ -33,3 +33,7 @@ Installation
 
 .. |Coverage| image:: https://coveralls.io/repos/github/raj-krishnan/PyAlpha/badge.svg?branch=master
    :target: https://coveralls.io/github/raj-krishnan/PyAlpha?branch=master
+
+.. |Documentation| image:: http://readthedocs.org/projects/pyalpha/badge/?version=latest
+   :target: http://pyalpha.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status

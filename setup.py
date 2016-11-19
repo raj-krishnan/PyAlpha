@@ -13,6 +13,7 @@ setup(name='PyAlpha',
       license='BSD',
       install_requires=requires,
       packages=['pyalpha',
+                'pyalpha.alpha',
                 'pyalpha.data_structures',
                 'pyalpha.portfolio'],
       )
