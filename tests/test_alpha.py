@@ -1,3 +1,4 @@
+import os
 import unittest
 import ystockquote
 
@@ -43,7 +44,9 @@ class TestAlpha(unittest.TestCase):
             self.assertTrue(i != 0)
 
     def test_result_against_snp100(self):
-        data = ystockquote.get_historical_prices("^OEX", TestAlpha.start_date, TestAlpha.end_date)
+        data = ystockquote.get_historical_prices("^OEX",
+                                                 TestAlpha.start_date,
+                                                 TestAlpha.end_date)
         return_snp100 = 0
         for k, v in data.items():
             open_price = float(v["Open"])
@@ -55,3 +58,18 @@ class TestAlpha(unittest.TestCase):
         print(return_snp100)
         self.assertLess(abs(return_pyalpha - return_snp100), 7.5)
 
+    def test_save_and_load_data(self):
+        TestAlpha.alpha.save_data()
+        to_compare_Alpha = AlphaDataset(stock_lists.SNP100,
+                                        TestAlpha.start_date,
+                                        TestAlpha.end_date)
+        to_compare_Alpha.load_data()
+        to_compare_Alpha.simulate()
+        self.assertEqual(TestAlpha.alpha.returns, to_compare_Alpha.returns)
+
+    @classmethod
+    def tearDownClass(cls):
+        try:
+            os.remove("stock_data.pickle")
+        except:
+            return
