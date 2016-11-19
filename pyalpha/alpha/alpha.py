@@ -1,5 +1,5 @@
 import datetime
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 import ystockquote
 import numpy as np
@@ -8,7 +8,7 @@ import copy
 from pyalpha.data_structures.historical_stock import HistoricalStock
 
 
-class Alpha(ABC):
+class Alpha(metaclass=ABCMeta):
     """
     Abstract class to compute alphas
     """
