@@ -22,7 +22,7 @@ class Alpha(ABC):
         self.use_cached_data = use_cached_data
         self.cache_data = cache_data
 
-        self.funds = 10000000
+        self.funds = 1000000
         self.turnover = [0]
         self.returns = []
 
@@ -121,7 +121,8 @@ class Alpha(ABC):
                 self.data[trading_day][j].returns = return_on_stock
                 returns_day += return_on_stock
 
-            self.returns.append(returns_day)
+            self.returns.append(returns_day * 100.0 / self.funds)
+            self.funds += returns_day
 
             if stock_vector_old is not None:
                 turnover_day = np.dot(stock_vector, stock_vector_old)
