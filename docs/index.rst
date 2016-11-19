@@ -17,9 +17,9 @@ Overview
 
     overview.rst
 
-********************************
-Installation and getting started
-********************************
+************
+Installation
+************
 
 .. toctree::
     :maxdepth: 2
@@ -34,15 +34,6 @@ Tutorials
     :maxdepth: 2
 
     tutorials/tutorial.rst
-
-**********
-Installing
-**********
-
-.. toctree::
-    :maxdepth: 2
-
-    installation.rst
 
 ***********************
 Reference Documentation
