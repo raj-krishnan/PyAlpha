@@ -3,7 +3,6 @@ from abc import ABCMeta, abstractmethod
 
 import ystockquote
 import numpy as np
-import copy
 
 from pyalpha.data_structures.historical_stock import HistoricalStock
 

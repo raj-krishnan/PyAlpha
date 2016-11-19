@@ -46,7 +46,7 @@ class TableLogger(BaseModel):
     total_quantity = peewee.IntegerField()
     total_value = peewee.FloatField()
     balance = peewee.FloatField()
-    buy_or_sell = peewee.CharField(choices = [('buy','buy'),('sell','sell')])
+    buy_or_sell = peewee.CharField(choices=[('buy', 'buy'), ('sell', 'sell')])
     timestamp = peewee.DateTimeField(default=datetime.datetime.now)
 
 

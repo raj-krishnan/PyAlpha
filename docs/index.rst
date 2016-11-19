@@ -13,9 +13,27 @@ Overview
 ********
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   overview.rst
+    overview.rst
+
+********************************
+Installation and getting started
+********************************
+
+.. toctree::
+    :maxdepth: 2
+
+    installation.rst
+
+*********
+Tutorials
+*********
+
+.. toctree::
+    :maxdepth: 2
+
+    tutorials/tutorial.rst
 
 ***********************
 Reference Documentation
