@@ -95,6 +95,7 @@ class Alpha(metaclass=ABCMeta):
                     self.data = pickle.load(data_file)
             except FileNotFoundError:
                 print("Specified stock_data file does not exist")
+                return
 
     @abstractmethod
     def alpha(self, stock):

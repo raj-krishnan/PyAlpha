@@ -1,7 +1,7 @@
 PIP = pip3
 PYTHON = python3
 
-.PHONY: all requirements clean docs tests
+.PHONY: all requirements clean coverage docs tests help
 
 all: requirements
 	$(PYTHON) setup.py install --user
@@ -12,6 +12,13 @@ requirements:
 clean:
 	rm -rf build/
 	rm -rf __pycache__/
+	rm -f .coverage
+	rm -rf htmlcov/
+
+coverage:
+	coverage run -m nose.core
+	coverage report -m
+	coverage html
 
 docs:
 	cd docs/ && make clean
@@ -20,3 +27,9 @@ docs:
 tests:
 	nosetests -v
 
+help:
+	@echo 'run "make" or "make all" to install the module'
+	@echo 'run "make clean" to clean build and coverage files'
+	@echo 'run "make coverage" to generage coverage'
+	@echo 'run "make docs" to generate documentation using sphinx'
+	@echo 'run "make tests" to run all the tests'
