@@ -21,6 +21,9 @@ class TestAlpha(unittest.TestCase):
                                  cls.start_date,
                                  cls.end_date)
 
+    def test_load_data_file_not_exists(self):
+        self.assertIsNone(TestAlpha.alpha.load_data())
+
     def test_dataset_creation_snp100(self):
         TestAlpha.alpha.construct_historical_data()
         keys = list(TestAlpha.alpha.data.keys())
@@ -59,17 +62,20 @@ class TestAlpha(unittest.TestCase):
         self.assertLess(abs(return_pyalpha - return_snp100), 7.5)
 
     def test_save_and_load_data(self):
-        TestAlpha.alpha.save_data()
+        TestAlpha.alpha.save_data("test_stock_data.pickle")
         to_compare_Alpha = AlphaDataset(stock_lists.SNP100,
                                         TestAlpha.start_date,
                                         TestAlpha.end_date)
-        to_compare_Alpha.load_data()
+        to_compare_Alpha.load_data("test_stock_data.pickle")
         to_compare_Alpha.simulate()
         self.assertEqual(TestAlpha.alpha.returns, to_compare_Alpha.returns)
+
+    def test_save_data_file_already_exists(self):
+        self.assertIsNone(TestAlpha.alpha.save_data("test_stock_data.pickle"))
 
     @classmethod
     def tearDownClass(cls):
         try:
-            os.remove("stock_data.pickle")
+            os.remove("test_stock_data.pickle")
         except:
             return
