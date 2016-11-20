@@ -18,6 +18,7 @@ Dependencies
 - peewee
 - pandas
 - ystockquote
+  -numpy
 
 Installation
 ------------
@@ -26,8 +27,7 @@ Installation
 
     $ git clone https://github.com/raj-krishnan/PyAlpha.git
     $ cd PyAlpha
-    $ pip install -r requirements.txt
-    $ python setup.py install
+    $ make
 
 .. |Build_Status| image:: https://travis-ci.org/raj-krishnan/PyAlpha.svg?branch=master
    :target: https://travis-ci.org/raj-krishnan/PyAlpha

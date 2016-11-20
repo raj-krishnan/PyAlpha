@@ -24,13 +24,9 @@ This project is hosted at https://github.com/raj-krishnan/PyAlpha and can be ins
     $ git clone https://github.com/raj-krishnan/PyAlpha.git
     $ cd PyAlpha
 
-Install the dependencies using::
+Install the package and the dependencies using::
 
-    $ pip install -r requirements.txt
-
-To install, run::
-
-    $ python setup.py install
+    $ make
 
 **PyAlpha doesn't support Windows currently**
 
