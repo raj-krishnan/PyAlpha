@@ -23,15 +23,12 @@ class Alpha(metaclass=ABCMeta):
     - simulate(self)
 
     """
-    def __init__(self, stock_list, start_date, end_date, cache_data=True,
-                 use_cached_data=True):
+    def __init__(self, stock_list, start_date, end_date):
 
         self.start_date = start_date
         self.end_date = end_date
         self.stock_list = stock_list
         self.data = {}
-        self.use_cached_data = use_cached_data
-        self.cache_data = cache_data
 
         self.funds = 1000000
         self.turnover = [0]
@@ -78,23 +75,21 @@ class Alpha(metaclass=ABCMeta):
         """
         - Saves the stock data to a pickle file locally
         """
-        if self.cache_data is True:
-            if os.path.isfile(file_name):
-                print("A stock_data file with the same name already exists")
-                return
-            with open(file_name, 'wb') as data_file:
-                pickle.dump(self.data, data_file, -1)
+        if os.path.isfile(file_name):
+            print("A stock_data file with the same name already exists")
+            return
+        with open(file_name, 'wb') as data_file:
+            pickle.dump(self.data, data_file, -1)
 
     def load_data(self, file_name='stock_data.pickle'):
         """
         - Loads the stock_data from a pickle file
         """
-        if self.use_cached_data is True:
-            try:
-                with open(file_name, 'rb') as data_file:
-                    self.data = pickle.load(data_file)
-            except FileNotFoundError:
-                print("Specified stock_data file does not exist")
+        try:
+            with open(file_name, 'rb') as data_file:
+                self.data = pickle.load(data_file)
+        except FileNotFoundError:
+            print("Specified stock_data file does not exist")
 
     @abstractmethod
     def alpha(self, stock):
