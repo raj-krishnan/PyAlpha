@@ -46,6 +46,6 @@ viewed as:
 
 .. sourcecode:: python
 
-    >>> John.view_log()
-    >>> Emma.view_log("TSLA") # view the transaction log of a specific stock
-    >>> stock_exchange.view_log()
+    John.view_log()
+    Emma.view_log("TSLA") # view the transaction log of a specific stock
+    stock_exchange.view_log()
