@@ -11,9 +11,11 @@ requirements:
 
 clean:
 	rm -rf build/
+	rm -rf dist/
 	rm -rf __pycache__/
 	rm -f .coverage
 	rm -rf htmlcov/
+	rm -rf PyAlpha.egg-info
 
 coverage:
 	coverage run -m nose.core

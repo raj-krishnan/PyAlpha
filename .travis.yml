@@ -6,7 +6,11 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coverage
+  - pip install flake8
   - pip install python-coveralls
+
+before_script:
+  - flake8 pyalpa/
 
 script:
   - nosetests --with-coverage -v

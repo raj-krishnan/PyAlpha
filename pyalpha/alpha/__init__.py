@@ -1,1 +1,1 @@
-from .alpha import *
+from .alpha import Alpha  # NOQA

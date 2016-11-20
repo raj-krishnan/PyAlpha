@@ -37,7 +37,7 @@ class TableUserPortfolio(BaseModel):
 class TableLogger(BaseModel):
     """
     Database Table containing:
-        
+
         - ForeignKey as TableStockExchange
         - Stocks
         - Their Purchase/ Selling price

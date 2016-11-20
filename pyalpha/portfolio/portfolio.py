@@ -96,7 +96,7 @@ class UserPortfolio:
         :Returns:
             - True if the transaction is successful
             - False otherwise
-        
+
         """
         if type(quantity) != int or quantity < 0:
             err = InputError(
