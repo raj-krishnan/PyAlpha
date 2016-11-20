@@ -40,7 +40,7 @@ class Alpha(metaclass=ABCMeta):
           data on the given date for each stock in the stock list.
 
         cache_data: Cache the resultant data using pickle
-        
+
         use_cache: Use cached data if available
 
         Stock lists are user defined
@@ -97,11 +97,9 @@ class Alpha(metaclass=ABCMeta):
             days.append(key)
 
         days = sorted(days)
-        print(days)
         for i in range(1, len(days)):
             data_day = days[i-1]
             trading_day = days[i]
-            print(data_day)
 
             alpha_stock = []
             stock_prices_open = []

@@ -1,7 +1,7 @@
 import unittest
 import ystockquote
 
-from pyalpha.alpha.alpha import Alpha
+from pyalpha.alpha import Alpha
 import pyalpha.alpha.stock_lists as stock_lists
 
 

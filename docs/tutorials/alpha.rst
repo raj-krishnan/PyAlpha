@@ -8,7 +8,7 @@ First, import the following modules:
 
 .. code-block:: python
 
-    from pyalpha.alpha.alpha import Alpha
+    from pyalpha.alpha import Alpha
     import pyalpha.alpha.stock_lists as stock_lists
 
 Now, inherit the Alpha class and define your custom alpha. In this example, we
