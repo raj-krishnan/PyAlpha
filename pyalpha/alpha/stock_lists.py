@@ -55,7 +55,7 @@ SNP100 = [
         "GILD",   # Gilead Sciences
         "GM",     # General Motors
         "GOOG",   # Alphabet Inc
-        "GOOGL",  # Alphabet Inc
+        # "GOOGL",  # Alphabet Inc
         "GS",     # Goldman Sachs
         "HAL",    # Halliburton
         "HD",     # Home Depot
@@ -244,7 +244,7 @@ SNP500 = [
         "COST",   # Costco Co.
         "COTY",   # Coty, Inc
         "CCI",    # Crown Castle International Corp.
-        "CSRA",   # CSRA Inc.
+        # "CSRA",   # CSRA Inc.
         "CSX",    # CSX Corp.
         "CMI",    # Cummins Inc.
         "CVS",    # CVS Health
@@ -342,7 +342,7 @@ SNP500 = [
         "HCP",    # HCP Inc.
         "HP",     # Helmerich & Payne
         "HES",    # Hess Corporation
-        "HPE",    # Hewlett Packard Enterprise
+        # "HPE",    # Hewlett Packard Enterprise
         "HOLX",   # Hologic
         "HD",     # Home Depot
         "HON",    # Honeywell Int'l Inc.

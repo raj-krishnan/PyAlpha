@@ -1,4 +1,6 @@
 import datetime
+import pickle
+import os
 from abc import ABCMeta, abstractmethod
 
 import ystockquote
@@ -15,6 +17,9 @@ class Alpha(metaclass=ABCMeta):
 
     - construct_historical_data(self)
     - verify_historical_data(self)
+    - save_data(self, file_name)
+    - load_data(self, file_name)
+    - alpha(self, stock)
     - simulate(self)
 
     """
@@ -39,12 +44,8 @@ class Alpha(metaclass=ABCMeta):
           a list of HistoricalStock instances, which contain the stock's
           data on the given date for each stock in the stock list.
 
-        cache_data: Cache the resultant data using pickle
-
-        use_cache: Use cached data if available
-
-        Stock lists are user defined
-        Stock lists for SNP100 and SNP500 available in stock_lists.py
+        Stock lists are user defined.
+        Stock lists for SNP100 and SNP500 available in *stock_lists.py*.
         """
         for stock in self.stock_list:
             response = ystockquote.get_historical_prices(stock,
@@ -73,14 +74,37 @@ class Alpha(metaclass=ABCMeta):
         for key in to_delete:
             self.data.pop(key)
 
+    def save_data(self, file_name='stock_data.pickle'):
+        """
+        - Saves the stock data to a pickle file locally
+        """
+        if self.cache_data is True:
+            if os.path.isfile(file_name):
+                print("A stock_data file with the same name already exists")
+                return
+            with open(file_name, 'wb') as data_file:
+                pickle.dump(self.data, data_file, -1)
+
+    def load_data(self, file_name='stock_data.pickle'):
+        """
+        - Loads the stock_data from a pickle file
+        """
+        if self.use_cached_data is True:
+            try:
+                with open(file_name, 'rb') as data_file:
+                    self.data = pickle.load(data_file)
+            except FileNotFoundError:
+                print("Specified stock_data file does not exist")
+
     @abstractmethod
     def alpha(self, stock):
         """
-        **Abstract Method**: Needs to be defined by the user
+        :Abstract Method: Needs to be defined by the user
 
         - Sets the weight for each stock
         - All parameters available in HistoricalStock can be used in here
         - Returns a single decimal giving the weight of a stock
+
         """
         pass
 

@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from pyalpha.data_structures.historical_stock import HistoricalStock
@@ -73,9 +74,12 @@ class TestStockExchange(unittest.TestCase):
                          len(TestStockExchange.rich.view_log().axes[0]) +
                          len(TestStockExchange.poor.view_log().axes[0]))
 
-    def tearDown(self):
-        pass
-
+    @classmethod
+    def tearDownClass(cls):
+        try:
+            os.remove("portfolio.db")
+        except:
+            return
 
 if __name__ == '__main__':
     unittest.main()
