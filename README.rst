@@ -18,7 +18,7 @@ Dependencies
 - peewee
 - pandas
 - ystockquote
-  -numpy
+- numpy
 
 Installation
 ------------
