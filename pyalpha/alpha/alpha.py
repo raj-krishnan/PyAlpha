@@ -87,7 +87,7 @@ class Alpha(metaclass=ABCMeta):
         """
         try:
             with open(os.path.join(file_directory, file_name), 'rb') as d_file:
-                self.data = pickle.load(data_file)
+                self.data = pickle.load(d_file)
         except FileNotFoundError:
             print("Specified stock_data file does not exist")
             return
