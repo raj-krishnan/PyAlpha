@@ -1,6 +1,7 @@
 import os
 import unittest
 import ystockquote
+import tempfile
 
 from pyalpha.alpha import Alpha
 import pyalpha.alpha.stock_lists as stock_lists
@@ -20,6 +21,7 @@ class TestAlpha(unittest.TestCase):
         cls.alpha = AlphaDataset(stock_lists.SNP100,
                                  cls.start_date,
                                  cls.end_date)
+        cls.temp_dir = tempfile.gettempdir()
 
     def test_load_data_file_not_exists(self):
         self.assertIsNone(TestAlpha.alpha.load_data())
@@ -62,20 +64,17 @@ class TestAlpha(unittest.TestCase):
         self.assertLess(abs(return_pyalpha - return_snp100), 7.5)
 
     def test_save_and_load_data(self):
-        TestAlpha.alpha.save_data("test_stock_data.pickle")
+        TestAlpha.alpha.save_data("test_stock_data.pickle",
+                                  TestAlpha.temp_dir)
         to_compare_Alpha = AlphaDataset(stock_lists.SNP100,
                                         TestAlpha.start_date,
                                         TestAlpha.end_date)
-        to_compare_Alpha.load_data("test_stock_data.pickle")
+        to_compare_Alpha.load_data("test_stock_data.pickle",
+                                   TestAlpha.temp_dir)
         to_compare_Alpha.simulate()
         self.assertEqual(TestAlpha.alpha.returns, to_compare_Alpha.returns)
 
     def test_save_data_file_already_exists(self):
-        self.assertIsNone(TestAlpha.alpha.save_data("test_stock_data.pickle"))
+        self.assertIsNone(TestAlpha.alpha.save_data("test_stock_data.pickle",
+                                                    TestAlpha.temp_dir))
 
-    @classmethod
-    def tearDownClass(cls):
-        try:
-            os.remove("test_stock_data.pickle")
-        except:
-            return

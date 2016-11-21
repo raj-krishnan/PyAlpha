@@ -71,22 +71,22 @@ class Alpha(metaclass=ABCMeta):
         for key in to_delete:
             self.data.pop(key)
 
-    def save_data(self, file_name='stock_data.pickle'):
+    def save_data(self, file_name='stock_data.pickle', file_directory='.'):
         """
         - Saves the stock data to a pickle file locally
         """
-        if os.path.isfile(file_name):
+        if os.path.isfile(os.path.join(file_directory, file_name)):
             print("A stock_data file with the same name already exists")
             return
         with open(file_name, 'wb') as data_file:
             pickle.dump(self.data, data_file, -1)
 
-    def load_data(self, file_name='stock_data.pickle'):
+    def load_data(self, file_name='stock_data.pickle', file_directory="."):
         """
         - Loads the stock_data from a pickle file
         """
         try:
-            with open(file_name, 'rb') as data_file:
+            with open(os.path.join(file_directory, file_name), 'rb') as d_file:
                 self.data = pickle.load(data_file)
         except FileNotFoundError:
             print("Specified stock_data file does not exist")
