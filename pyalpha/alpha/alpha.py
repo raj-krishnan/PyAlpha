@@ -78,7 +78,7 @@ class Alpha(metaclass=ABCMeta):
         if os.path.isfile(os.path.join(file_directory, file_name)):
             print("A stock_data file with the same name already exists")
             return
-        with open(os.path.join(file_name, file_directory), 'wb') as data_file:
+        with open(os.path.join(file_directory, file_name), 'wb') as data_file:
             pickle.dump(self.data, data_file, -1)
 
     def load_data(self, file_name='stock_data.pickle', file_directory="."):
