@@ -49,7 +49,6 @@ class TestStockExchange(unittest.TestCase):
         self.assertRaises(InputError, TestStockExchange.rich.sell_stock,
                           "AAPL", 1)
 
-
     def test_sell_stock_insufficient_stocks_available(self):
         self.assertRaises(InputError, TestStockExchange.rich.sell_stock,
                           "AAPL", 20)
@@ -93,6 +92,7 @@ class TestStockExchange(unittest.TestCase):
             os.remove("portfolio.db")
         except:
             return
+
 
 if __name__ == '__main__':
     unittest.main()

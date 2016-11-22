@@ -140,8 +140,8 @@ class Alpha(metaclass=ABCMeta):
             returns_day = 0
 
             for j in range(len(alpha_stock)):
-                quantity = int(alpha_stock[j] * self.funds
-                               / (alpha_total * stock_prices_open[j]))
+                quantity = int(alpha_stock[j] * self.funds /
+                               (alpha_total * stock_prices_open[j]))
                 stock_vector.append(quantity)
                 return_on_stock = ((stock_prices_close[j] -
                                     stock_prices_open[j]) * quantity)
