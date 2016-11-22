@@ -1,4 +1,3 @@
-import os
 import unittest
 import ystockquote
 import tempfile
@@ -77,4 +76,3 @@ class TestAlpha(unittest.TestCase):
     def test_save_data_file_already_exists(self):
         self.assertIsNone(TestAlpha.alpha.save_data("test_stock_data.pickle",
                                                     TestAlpha.temp_dir))
-

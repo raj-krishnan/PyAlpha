@@ -3,7 +3,7 @@ import unittest
 
 from pyalpha.data_structures.historical_stock import HistoricalStock
 from pyalpha.data_structures.stock import Stock
-from pyalpha.portfolio.portfolio import StockExchange
+from pyalpha.portfolio.portfolio import StockExchange, InputError
 
 
 class TestStockExchange(unittest.TestCase):
@@ -36,16 +36,26 @@ class TestStockExchange(unittest.TestCase):
         self.assertTrue(TestStockExchange.rich.buy_stock("AAPL", 2))
 
     def test_buy_stock_insufficient_balance(self):
-        self.assertFalse(TestStockExchange.poor.buy_stock("AAPL", 20))
+        self.assertRaises(InputError, TestStockExchange.poor.buy_stock,
+                          "AAPL", 20)
 
     def test_sell_stock_sufficient_stocks_available(self):
         self.assertTrue(TestStockExchange.rich.sell_stock("AAPL", 1))
 
+        # Sell all the stocks
+        self.assertTrue(TestStockExchange.rich.sell_stock("AAPL", 3))
+        # No stock available
+        self.assertRaises(InputError, TestStockExchange.rich.sell_stock,
+                          "AAPL", 1)
+
+
     def test_sell_stock_insufficient_stocks_available(self):
-        self.assertFalse(TestStockExchange.rich.sell_stock("AAPL", 20))
+        self.assertRaises(InputError, TestStockExchange.rich.sell_stock,
+                          "AAPL", 20)
 
     def test_sell_stock_stock_not_available(self):
-        self.assertFalse(TestStockExchange.rich.sell_stock("GOOGL", 10))
+        self.assertRaises(InputError, TestStockExchange.rich.sell_stock,
+                          "GOOGL", 10)
 
     def test_funds_deposit(self):
         deposit = 1000
@@ -56,7 +66,9 @@ class TestStockExchange(unittest.TestCase):
     def test_funds_withdrawal(self):
         withdrawal = 1000
         balance = TestStockExchange.rich.balance
-        TestStockExchange.rich.add_funds(-1 * withdrawal)
+        self.assertRaises(InputError, TestStockExchange.rich.add_funds,
+                          -1 * withdrawal)
+
         # Should not withdraw funds
         self.assertEqual(balance, TestStockExchange.rich.balance)
 

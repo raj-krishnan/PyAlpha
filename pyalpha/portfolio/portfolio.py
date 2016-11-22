@@ -60,10 +60,8 @@ class UserPortfolio:
         Increases balance in the account by the specified amount.
         """
         if deposit < 0:
-            err = InputError(
-                deposit, ', which is the amount to be deposited is positive')
-            print(err.expression, err.message)
-            return
+            raise InputError(deposit, 'which is the amount to be deposited'
+                             'should be positive')
 
         self.balance += float(deposit)
 
@@ -99,19 +97,14 @@ class UserPortfolio:
 
         """
         if type(quantity) != int or quantity < 0:
-            err = InputError(
-                quantity, ', which is the amount of stock to be purchased \
-can only be a positive integer')
-            print(err.expression, err.message)
-            return False
+            raise InputError(quantity, 'which is the amount of stock to be'
+                             'purchased can only be a positive integer')
 
         stock_price = self._get_stock_quote(symbol)
         if stock_price * quantity > self.balance:
             # Insufficient Funds
-            err = InputError(
-                quantity, 'stocks cannot be bought due to insufficient funds')
-            print(err.expression, err.message)
-            return False
+            raise InputError(quantity, 'stocks cannot be bought due to'
+                             'insufficient funds')
         person_record = models.TableStockExchange.get(
             models.TableStockExchange.name == self.name)
         portfolio_record = (
@@ -164,11 +157,8 @@ can only be a positive integer')
 
         """
         if type(quantity) != int or quantity < 0:
-            err = InputError(
-                quantity, ', which is the amount of stock to be sold \
-can only be a positive integer')
-            print(err.expression, err.message)
-            return False
+            raise InputError(quantity, 'which is the amount of stock to be'
+                             'sold should be a positive integer')
 
         stock_price = self._get_stock_quote(symbol)
         person_record = models.TableStockExchange.get(
@@ -199,16 +189,10 @@ can only be a positive integer')
                 total_stock_value = 0
             else:
                 # The amount to sell is more than what the person holds
-                err = InputError(
-                    quantity, ', stocks are not available to sell')
-                print(err.expression, err.message)
-                return False
+                raise InputError(quantity, 'stocks are not available to sell')
         else:
             # The specified stock doesn't exist
-            err = InputError(
-                symbol, 'does not exist in the user\'s portfolio')
-            print(err.expression, err.message)
-            return False
+            raise InputError(symbol, 'does not exist in the user\'s portfolio')
 
         # Update the balance of the person
         self.balance = self.balance + stock_price * quantity
@@ -336,8 +320,8 @@ class StockExchange:
         """
         if initial_balance < 0:
             err = InputError(
-                initial_balance, ', which is the initial balance \
-available to the user should be positive')
+                initial_balance, ', which is the initial balance'
+                'available to the user should be positive')
             print(err.expression, err.message)
             return
         models.TableStockExchange.insert(
