@@ -319,11 +319,8 @@ class StockExchange:
         Adds an user along with his/her balance to the database
         """
         if initial_balance < 0:
-            err = InputError(
-                initial_balance, ', which is the initial balance'
-                'available to the user should be positive')
-            print(err.expression, err.message)
-            return
+            raise InputError(initial_balance, ', which is the initial balance'
+                             'available to the user should be positive')
         models.TableStockExchange.insert(
             name=person_name, balance=initial_balance).execute()
         person = UserPortfolio(person_name, initial_balance)

@@ -14,7 +14,8 @@ class TestStockExchange(unittest.TestCase):
         cls.poor = cls.se.add_user("Poor", 10)
 
     def test_add_user_initial_balance_to_be_positive(self):
-        self.assertIsNone(TestStockExchange.se.add_user("John", -10))
+        self.assertRaises(InputError, TestStockExchange.se.add_user,
+                          "John", -10)
 
     def test_stock_price_fetch(self):
         tesla = Stock()
